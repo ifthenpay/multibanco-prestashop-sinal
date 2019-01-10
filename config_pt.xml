@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<module>
+	<name>multibancoprepagamento</name>
+	<displayName><![CDATA[Pagamento por contra reembolso]]></displayName>
+	<version><![CDATA[5.0.2]]></version>
+	<description><![CDATA[Permitir &agrave;s empresas, lojas on-line, escolas, clubes, associa&ccedil;&otilde;es e munic&iacute;pios a emiss&atilde;o de Refer&ecirc;ncias Multibanco nos seus documentos ou site, para pr&eacute;-pagamento por servi&ccedil;os ou bens, que podem ser pagas na rede Multibanco ou Home Banking.]]></description>
+	<author><![CDATA[IfthenPay, Lda]]></author>
+	<tab><![CDATA[payments_gateways]]></tab>
+	<confirmUninstall><![CDATA[Confirma o procedimento para desinstalar o Pagamento por Multibanco?]]></confirmUninstall>
+	<is_configurable>1</is_configurable>
+	<need_instance>1</need_instance>
+	<limited_countries></limited_countries>
+</module>
