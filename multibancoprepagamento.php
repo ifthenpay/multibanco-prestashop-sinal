@@ -485,7 +485,7 @@ class MultiBancoPrePagamento extends PaymentModule
 							URL Callback
 						</td>
 						<td>
-							<b>'.$this->curPageURL().'modules/'.$this->name.'/callback/callback.php?chave=[CHAVE_ANTI_PHISHING]&entidade=[ENTIDADE]&referencia=[REFERENCIA]&valor=[VALOR]</b>
+							<b>'.$this->curPageURL().'modules/multibanco/callback/callback.php?chave=[CHAVE_ANTI_PHISHING]&entidade=[ENTIDADE]&referencia=[REFERENCIA]&valor=[VALOR]</b>
 						</td>
 					</tr>
 					<tr>
