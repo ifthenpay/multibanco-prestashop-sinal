@@ -123,7 +123,7 @@ class MultiBancoPrePagamento extends PaymentModule
 			/** CRIANDO A Tabela de Registo de refer�ncias multibanco  **/
 				Db::getInstance()->Execute
 				('
-					CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'multibancoprepagamento`(
+					CREATE TABLE IF NOT EXISTS `' . _DB_PREFIX_ . 'multibanco`(
 					  `id` int(11) NOT NULL AUTO_INCREMENT,
 					  `order_id` int(11) NOT NULL,
 					  `entidade` int(11) NOT NULL,
@@ -485,7 +485,7 @@ class MultiBancoPrePagamento extends PaymentModule
 							URL Callback
 						</td>
 						<td>
-							<b>'.$this->curPageURL().'modules/multibanco/callback/callback.php?chave=[CHAVE_ANTI_PHISHING]&entidade=[ENTIDADE]&referencia=[REFERENCIA]&valor=[VALOR]</b>
+							<b>'.$this->curPageURL().'module/multibanco/callback?chave=[CHAVE_ANTI_PHISHING]&entidade=[ENTIDADE]&referencia=[REFERENCIA]&valor=[VALOR]</b>
 						</td>
 					</tr>
 					<tr>
@@ -547,7 +547,6 @@ class MultiBancoPrePagamento extends PaymentModule
 			'this_path' => $this->_path,
 			'this_path_ssl' => Tools::getShopDomainSsl(true, true).__PS_BASE_URI__.'modules/'.$this->name.'/'
 		));
-		$teste2 = __FILE__ .  'payment.tpl';
 		return $this->display(__FILE__, 'payment.tpl');
 	}
 
@@ -571,9 +570,10 @@ class MultiBancoPrePagamento extends PaymentModule
 			$this->smarty->assign(array(
 				'entidade' => $entidade,
 				'referencia' => $referencia,
-				'total_paid' => round($tot,2),
+				'total_paid' => $total,
 				'status' => 'ok',
-				'id_order' => $params['objOrder']->id
+				'id_order' => $params['objOrder']->id,
+				'{mb_logo}' => _PS_BASE_URL_ ._MODULE_DIR_.'multibancoprepagamento/multibanco.jpg',
 			));
 			if (isset($params['objOrder']->reference) && !empty($params['objOrder']->reference))
 				$this->smarty->assign('reference', $params['objOrder']->reference);
@@ -590,14 +590,14 @@ class MultiBancoPrePagamento extends PaymentModule
 				'{lastname}' => $cliente->lastname,
 				'{entidade}' => $entidade,
 				'{referencia}' => $referencia,
-				'{total_paid}' => round($tot,2)
+				'{total_paid}' => $total,
+				'{mb_logo}' => _PS_BASE_URL_ ._MODULE_DIR_.'multibancoprepagamento/multibanco.jpg'
 			);
-
 			Mail::Send((int)$params['objOrder']->id_lang, 'multibanco', 'Dados para pagamento por Multibanco', $data, $cliente->email, $cliente->firstname.' '.$cliente->lastname,
-					null, null, null, null, _PS_MAIL_DIR_, false, (int)$params['objOrder']->id_shop);
+					null, null, null, null, dirname(__FILE__) . '\mails/', false, (int)$params['objOrder']->id_shop);
 
 			//guardar dados em base de dados para controlo callback
-			$this->setMultibancoOrderDb($params['objOrder']->id,$entidade,$referencia,round($params['total_to_pay'],2));
+			$this->setMultibancoOrderDb($params['objOrder']->id,$entidade,$referencia,round($total,2));
 		}
 		else
 			$this->smarty->assign('status', 'failed');
@@ -647,7 +647,7 @@ class MultiBancoPrePagamento extends PaymentModule
 		if($orderidcheck<1){
 			Db::getInstance()->Execute
 				('
-					INSERT INTO `' . _DB_PREFIX_ . 'multibancoprepagamento`
+					INSERT INTO `' . _DB_PREFIX_ . 'multibanco`
 				( `order_id`, `entidade`, `referencia`, `valor`)
 					VALUES
 				('.$order.', '.$entidade.', \''.$referencia.'\', '.$valor.');
@@ -675,7 +675,7 @@ class MultiBancoPrePagamento extends PaymentModule
 
 		$pagamentos = Db::getInstance()->getRow('
 		SELECT '.$select.'
-		FROM `'._DB_PREFIX_.'multibancoprepagamento`
+		FROM `'._DB_PREFIX_.'multibanco`
 		WHERE `entidade`=\''.$entidade.'\' and `referencia` =\''.$referencia.'\' and' . $where . '
 		ORDER BY id desc
 		');
@@ -687,7 +687,7 @@ class MultiBancoPrePagamento extends PaymentModule
 	{
 		Db::getInstance()->Execute
 			('
-				UPDATE `' . _DB_PREFIX_ . 'multibancoprepagamento`
+				UPDATE `' . _DB_PREFIX_ . 'multibanco`
 				SET '.$set.'
 				WHERE `order_id`='.$orderId);
 	}

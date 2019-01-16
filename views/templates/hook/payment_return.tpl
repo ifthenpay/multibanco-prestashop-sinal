@@ -7,7 +7,7 @@
 			<tbody>
 				<tr>
 					<td valign="top" style="border-bottom: solid 1px #222; padding-top: 5px; padding-bottom: 5px;">
-						<img src="http://spotdatecnologia.com/modules/multibancoprepagamento/logo.png" border="0">
+						<img src="https://ifthenpay.com/img/logo_mb.png" border="0">
 					</td>
 					<td valign="middle" width="100%" style="padding-left: 10px; border-bottom: solid 1px #222; padding-top: 5px; padding-bottom: 5px; ">
 						Pagamento por Multibanco&nbsp;&nbsp;
