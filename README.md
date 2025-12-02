@@ -1,3 +1,8 @@
+# ❌ Warning version deprecation
+
+    This version will not receive updates, bug fixes, or security patches.
+    This version will not receive technical support.
+
 # multibanco-prestashop-sinal
 Módulo pagamento multibanco com sinal. Versão prestashop 1.6
 
